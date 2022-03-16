@@ -31,7 +31,10 @@ bot.command("start", (ctx) => ctx.reply("monroe: Welcome! Send me a b0tnude!"));
 
 bot.on(
   "message:text",
-  (ctx) => ctx.reply("monroe: That is text and not a photo!"),
+  (ctx) => {
+    console.log(ctx)
+    ctx.reply("monroe: That is text and not a photo!")
+  },
 );
 
 bot.on(
