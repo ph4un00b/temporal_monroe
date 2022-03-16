@@ -28,6 +28,10 @@ export const bot = new Bot(token, {
 bot.command("start", (ctx) => ctx.reply("monroe: Welcome! Send me a b0tnude!"));
 
 // bot.on("message", (ctx) => console.log(ctx));
+bot.on(":text").hears(/jamon/, (ctx) => {
+  console.log(ctx)
+  ctx.reply("did you say jamon?")
+})
 
 bot.on(
   "message:text",
@@ -50,9 +54,6 @@ bot.on(
     }),
 );
 
-bot.on(":text").hears(/jamon/, (ctx) => {
-  console.log(ctx)
-  ctx.reply("did you say jamon?")
-})
+
 
 export default bot;
