@@ -50,23 +50,21 @@ bot.on(":text").hears(/html/, (ctx) => {
 bot.on(":text").hears(/markdown/, (ctx) => {
   ctx.reply(
     `*Hi\\!* _Welcome_ to [me](https://phau-root.web.app/phau/)\\.
-  *bold \*text*
-  _italic \*text_
-  __underline__
-  ~strikethrough~
-  ||spoiler||
-  *bold _italic bold ~italic bold strikethrough ||italic bold strikethrough spoiler||~ __underline italic bold___ bold*
-  [inline URL](http://www.example.com/)
-  [inline mention of a user](tg://user?id=123456789)
-  \`inline fixed-width code\`
-  \`\`\`
-  pre-formatted fixed-width code block
-  \`\`\`
-  \`\`\`js
-  console.log("jamon!");
-  //pre-formatted fixed-width code block written in the Python programming language
-  \`\`\`
-  `,
+*bold text*
+_italic text_
+__underline__
+~strikethrough~
+*bold _italic bold ~italic bold strikethrough ||italic bold strikethrough spoiler||~ __underline italic bold___ bold*
+||spoiler||
+[inline URL](http://www.example.com/)
+[inline mention of a user](tg://user?id=123456789)
+\`inline fixed-width code\`
+\`\`\`
+pre-formatted fixed-width code block
+\`\`\`
+\`\`\`js
+console.log("jamon!");
+\`\`\``,
     {
       parse_mode: "MarkdownV2",
     },
