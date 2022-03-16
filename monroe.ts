@@ -50,4 +50,9 @@ bot.on(
     }),
 );
 
+bot.on(":text").hears(/jamon/, (ctx) => {
+  console.log(ctx)
+  ctx.reply("did you say jamon?")
+})
+
 export default bot;
