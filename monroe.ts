@@ -27,7 +27,7 @@ export const bot = new Bot(token, {
 
 bot.command("start", (ctx) => ctx.reply("monroe: Welcome! Send me a b0tnude!"));
 
-bot.on("message", (ctx) => console.log(ctx));
+// bot.on("message", (ctx) => console.log(ctx));
 
 bot.on(
   "message:text",
