@@ -27,10 +27,50 @@ export const bot = new Bot(token, {
 
 bot.command("start", (ctx) => ctx.reply("monroe: Welcome! Send me a b0tnude!"));
 
+bot.on(":text").hears(/html/, (ctx) => {
+  ctx.reply(
+    `<b>bold</b>, <strong>bold</strong>
+  <i>italic</i>, <em>italic</em>
+  <u>underline</u>, <ins>underline</ins>
+  <s>strikethrough</s>, <strike>strikethrough</strike>, <del>strikethrough</del>
+  <span class="tg-spoiler">spoiler</span>, <tg-spoiler>spoiler</tg-spoiler>
+  <b>bold <i>italic bold <s>italic bold strikethrough <span class="tg-spoiler">italic bold strikethrough spoiler</span></s> <u>underline italic bold</u></i> bold</b>
+  <a href="http://www.example.com/">inline URL</a>
+  <a href="tg://user?id=123456789">inline mention of a user</a>
+  <code>inline fixed-width code</code>
+  <pre>pre-formatted fixed-width code block</pre>
+  <pre><code class="language-python">pre-formatted fixed-width code block written in the Python programming language</code></pre>
+  `,
+    {
+      parse_mode: "HTML",
+    },
+  );
+});
+
 bot.on(":text").hears(/markdown/, (ctx) => {
-  ctx.reply("*Hi\\!* _Welcome_ to [me](https://phau-root.web.app/phau/)\\.", {
-    parse_mode: "MarkdownV2",
-  });
+  ctx.reply(
+    `*Hi\\!* _Welcome_ to [me](https://phau-root.web.app/phau/)\\.
+  *bold \*text*
+  _italic \*text_
+  __underline__
+  ~strikethrough~
+  ||spoiler||
+  *bold _italic bold ~italic bold strikethrough ||italic bold strikethrough spoiler||~ __underline italic bold___ bold*
+  [inline URL](http://www.example.com/)
+  [inline mention of a user](tg://user?id=123456789)
+  \`inline fixed-width code\`
+  \`\`\`
+  pre-formatted fixed-width code block
+  \`\`\`
+  \`\`\`js
+  console.log("jamon!");
+  //pre-formatted fixed-width code block written in the Python programming language
+  \`\`\`
+  `,
+    {
+      parse_mode: "MarkdownV2",
+    },
+  );
 });
 
 // bot.on("message", (ctx) => console.log(ctx));
