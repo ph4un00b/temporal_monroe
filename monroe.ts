@@ -27,17 +27,23 @@ export const bot = new Bot(token, {
 
 bot.command("start", (ctx) => ctx.reply("monroe: Welcome! Send me a b0tnude!"));
 
+bot.on(":text").hears(/markdown/, (ctx) => {
+  ctx.reply("*Hi\\!* _Welcome_ to [me](https://phau-root.web.app/phau/)\\.", {
+    parse_mode: "MarkdownV2",
+  });
+});
+
 // bot.on("message", (ctx) => console.log(ctx));
 bot.on(":text").hears(/jamon/, (ctx) => {
-  console.log(ctx)
-  ctx.reply("did you say jamon?")
-})
+  console.log(ctx);
+  ctx.reply("did you say jamon?");
+});
 
 bot.on(
   "message:text",
   (ctx) => {
-    console.log(ctx)
-    ctx.reply("monroe: That is text and not a photo!")
+    console.log(ctx);
+    ctx.reply("monroe: That is text and not a photo!");
   },
 );
 
@@ -53,7 +59,5 @@ bot.on(
       reply_to_message_id: ctx.editedMessage.message_id,
     }),
 );
-
-
 
 export default bot;
