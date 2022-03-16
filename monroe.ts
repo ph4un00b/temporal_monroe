@@ -14,15 +14,15 @@ if (typeof username !== "string") throw new Error("no bot username!");
 
 export const bot = new Bot(token, {
   // https://api.telegram.org/bot<bot_token>/getMe
-  // botInfo: {
-  //   id: id,
-  //   is_bot: true,
-  //   first_name: name,
-  //   username,
-  //   can_join_groups: true,
-  //   can_read_all_group_messages: false,
-  //   supports_inline_queries: false,
-  // },
+  botInfo: {
+    id: id,
+    is_bot: true,
+    first_name: name,
+    username,
+    can_join_groups: true,
+    can_read_all_group_messages: false,
+    supports_inline_queries: false,
+  },
 });
 
 bot.command("start", (ctx) => ctx.reply("monroe: Welcome! Send me a b0tnude!"));
