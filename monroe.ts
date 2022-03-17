@@ -32,6 +32,7 @@ monroe: Welcome! Send me a b0tnude!
 I have this options for you:
 you can type:
 
+- /inline
 - switch
 - inline
 - html
@@ -43,6 +44,18 @@ bot will react on:
 - upload an image
 - edit a message
 `));
+
+const global_inline = new InlineKeyboard().text("click", "click-payload");
+
+bot.command("inline", async (ctx) => {
+  await ctx.reply("Curious? Click me!", { reply_markup: global_inline });
+});
+
+bot.callbackQuery("click-payload", async (ctx) => {
+  await ctx.answerCallbackQuery({
+    text: "You were curious, indeed!",
+  });
+});
 
 // Any button of any inline keyboard:
 bot.on("callback_query:data", (ctx) => {
@@ -56,9 +69,12 @@ bot.on(["channel_post:text", ":text"]).hears(/switch/, (ctx) => {
     .text("Get random music", "random").row()
     .switchInline("Send music to friends");
 
-  ctx.reply("Here is your switch keyboard!", {
-    reply_markup: inlineKeyboard,
-  });
+  ctx.reply(
+    "Here is your switch keyboard! this, only works on direct message with monroe bot!",
+    {
+      reply_markup: inlineKeyboard,
+    },
+  );
 });
 
 bot.on("channel_post:text").hears(/inline/, (ctx) => {
