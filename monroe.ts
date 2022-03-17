@@ -25,7 +25,22 @@ export const bot = new Bot(token, {
   },
 });
 
-bot.command("start", (ctx) => ctx.reply("monroe: Welcome! Send me a b0tnude!"));
+bot.command("start", (ctx) => ctx.reply(`
+monroe: Welcome! Send me a b0tnude!
+
+I have this options for you:
+you can type:
+
+- inline
+- html
+- markdown
+- jamon
+
+bot will react on:
+- any text
+- upload an image
+- edit a message
+`));
 
 bot.on("channel_post:text").hears(/inline/, (ctx) => {
   console.log(ctx);
