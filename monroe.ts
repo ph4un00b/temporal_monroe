@@ -36,7 +36,7 @@ monroe: Welcome! Send me a b0tnude!
 I have this options for you:
 you can type:
 
-- /selective
+- selective (DM)
 - /keyboard_one_button (DM)
 - /keyboard_resize (DM)
 - /keyboard (DM)
@@ -48,10 +48,16 @@ you can type:
 - jamon
 
 bot will react on:
+- members statuses (join / left)
 - any text
 - upload an image
 - edit a message
 `));
+
+
+bot.on("chat_member", (ctx) => {
+  console.log(ctx)
+});
 
 const global_keyboard = new Keyboard()
   .text("7").text("8").text("9").text("*").row()
@@ -61,7 +67,7 @@ const global_keyboard = new Keyboard()
 
 const global_inline = new InlineKeyboard().text("click", "click-payload");
 
-bot.command("selective", async (ctx) => {
+bot.on(["channel_post:text", ":text"]).hears(/selective/, async (ctx) => {
   await ctx.reply("selective!", {
     reply_to_message_id: ctx.msg.message_id,
     reply_markup: {
