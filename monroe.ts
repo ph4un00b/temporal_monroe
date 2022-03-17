@@ -29,6 +29,20 @@ export const bot = new Bot(token, {
   },
 });
 
+bot.on("chat_member", (ctx) => {
+  console.log(ctx.chatMember);
+  const { new_chat_member: { status, user } } = ctx.chatMember;
+  if (status !== "member") return;
+  const { username, first_name, last_name } = user;
+  const new_member = username ?? `${first_name} ${last_name}`.trim();
+
+  ctx.reply(`
+monroe: Welcome ${new_member}! Send me a b0tnude!
+
+try some options, type /start:
+`);
+});
+
 bot.command("start", (ctx) =>
   ctx.reply(`
 monroe: Welcome! Send me a b0tnude!
@@ -53,11 +67,6 @@ bot will react on:
 - upload an image
 - edit a message
 `));
-
-
-bot.on("chat_member", (ctx) => {
-  console.log(ctx)
-});
 
 const global_keyboard = new Keyboard()
   .text("7").text("8").text("9").text("*").row()
