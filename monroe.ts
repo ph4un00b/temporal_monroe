@@ -2,7 +2,7 @@ import {
   Bot,
   InlineKeyboard,
   Keyboard,
-} from "https://deno.land/x/grammy/mod.ts";
+} from "https://deno.land/x/grammy@v1.7.0/mod.ts";
 // import { config } from "https://deno.land/x/dotenv/mod.ts";
 // config({ safe: true, export: true });
 
@@ -19,13 +19,13 @@ if (typeof username !== "string") throw new Error("no bot username!");
 export const bot = new Bot(token, {
   // https://api.telegram.org/bot<bot_token>/getMe
   botInfo: {
-    id: id,
-    is_bot: true,
-    first_name: name,
+    id,
     username,
+    first_name: name,
     can_join_groups: true,
-    can_read_all_group_messages: false,
     supports_inline_queries: false,
+    can_read_all_group_messages: false,
+    is_bot: true,
   },
 });
 
@@ -36,6 +36,7 @@ monroe: Welcome! Send me a b0tnude!
 I have this options for you:
 you can type:
 
+- /selective
 - /keyboard_one_button (DM)
 - /keyboard_resize (DM)
 - /keyboard (DM)
@@ -60,9 +61,22 @@ const global_keyboard = new Keyboard()
 
 const global_inline = new InlineKeyboard().text("click", "click-payload");
 
+bot.command("selective", async (ctx) => {
+  await ctx.reply("selective!", {
+    reply_to_message_id: ctx.msg.message_id,
+    reply_markup: {
+      selective: true,
+      keyboard: global_keyboard.build(),
+    },
+  });
+});
+
 bot.command("keyboard_one_button", async (ctx) => {
   await ctx.reply("calculator one button!", {
-    reply_markup: { one_time_keyboard: true, keyboard: global_keyboard.build() },
+    reply_markup: {
+      one_time_keyboard: true,
+      keyboard: global_keyboard.build(),
+    },
   });
 });
 
