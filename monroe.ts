@@ -1,4 +1,8 @@
-import { Bot, InlineKeyboard } from "https://deno.land/x/grammy/mod.ts";
+import {
+  Bot,
+  InlineKeyboard,
+  Keyboard,
+} from "https://deno.land/x/grammy/mod.ts";
 // import { config } from "https://deno.land/x/dotenv/mod.ts";
 // config({ safe: true, export: true });
 
@@ -32,6 +36,7 @@ monroe: Welcome! Send me a b0tnude!
 I have this options for you:
 you can type:
 
+- /keyboard
 - /inline
 - switch
 - inline
@@ -45,7 +50,17 @@ bot will react on:
 - edit a message
 `));
 
+const global_keyboard = new Keyboard()
+  .text("7").text("8").text("9").text("*").row()
+  .text("4").text("5").text("6").text("/").row()
+  .text("1").text("2").text("3").text("-").row()
+  .text("0").text(".").text("=").text("+");
+
 const global_inline = new InlineKeyboard().text("click", "click-payload");
+
+bot.command("keyboard", async (ctx) => {
+  await ctx.reply("calculator!", { reply_markup: global_keyboard });
+});
 
 bot.command("inline", async (ctx) => {
   await ctx.reply("Curious? Click me!", { reply_markup: global_inline });
