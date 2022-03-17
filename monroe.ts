@@ -1,4 +1,4 @@
-import { Bot } from "https://deno.land/x/grammy/mod.ts";
+import { Bot, InlineKeyboard } from "https://deno.land/x/grammy/mod.ts";
 // import { config } from "https://deno.land/x/dotenv/mod.ts";
 // config({ safe: true, export: true });
 
@@ -26,6 +26,19 @@ export const bot = new Bot(token, {
 });
 
 bot.command("start", (ctx) => ctx.reply("monroe: Welcome! Send me a b0tnude!"));
+
+bot.on("channel_post:text").hears(/inline/, (ctx) => {
+  console.log(ctx);
+
+  const keyboard = new InlineKeyboard()
+    .text("A").text("B", "callack-data").row()
+    .text("C").text("D").row()
+    .url("Telegram", "telegram.org");
+
+  ctx.reply("Here is your inline keyboard!", {
+    reply_markup: keyboard,
+  });
+});
 
 bot.on(":text").hears(/html/, (ctx) => {
   ctx.reply(
