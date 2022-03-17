@@ -58,8 +58,10 @@ bot.callbackQuery("click-payload", async (ctx) => {
 });
 
 // Any button of any inline keyboard:
-bot.on("callback_query:data", (ctx) => {
-  console.log(ctx);
+bot.on("callback_query:data", async (ctx) => {
+  console.log("Unknown button event with payload", ctx.callbackQuery.data);
+  // remove loading animation
+  await ctx.answerCallbackQuery();
 });
 
 bot.on(["channel_post:text", ":text"]).hears(/switch/, (ctx) => {
