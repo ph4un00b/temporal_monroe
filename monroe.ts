@@ -33,14 +33,14 @@ bot.on("channel_post:text").hears(/inline/, (ctx) => {
   const keyboard = new InlineKeyboard()
     .text("A").text("B", "callack-data").row()
     .text("C").text("D").row()
-    .url("Telegram", "telegram.org");
+    .url("phau page", "https://phau-root.web.app/phau/");
 
   ctx.reply("Here is your inline keyboard!", {
     reply_markup: keyboard,
   });
 });
 
-bot.on(":text").hears(/html/, (ctx) => {
+bot.on(["channel_post:text", ":text"]).hears(/html/, (ctx) => {
   ctx.reply(
     `<b>bold</b>, <strong>bold</strong>
   <i>italic</i>, <em>italic</em>
@@ -60,7 +60,7 @@ bot.on(":text").hears(/html/, (ctx) => {
   );
 });
 
-bot.on(":text").hears(/markdown/, (ctx) => {
+bot.on(["channel_post:text", ":text"]).hears(/markdown/, (ctx) => {
   ctx.reply(
     `*Hi\\!* _Welcome_ to [me](https://phau-root.web.app/phau/)\\.
 *bold text*
@@ -85,13 +85,13 @@ console.log("jamon!");
 });
 
 // bot.on("message", (ctx) => console.log(ctx));
-bot.on(":text").hears(/jamon/, (ctx) => {
+bot.on(["channel_post:text", ":text"]).hears(/jamon/, (ctx) => {
   console.log(ctx);
   ctx.reply("did you say jamon?");
 });
 
 bot.on(
-  "message:text",
+  ["channel_post:text", ":text"],
   (ctx) => {
     console.log(ctx);
     ctx.reply("monroe: That is text and not a photo!");
@@ -99,15 +99,15 @@ bot.on(
 );
 
 bot.on(
-  "message:photo",
+  ["channel_post:photo", ":photo"],
   (ctx) => ctx.reply("monroe: Nice photo! Is that you?"),
 );
 
 bot.on(
-  "edited_message",
+  ["edited_channel_post", "edited_message"],
   (ctx) =>
     ctx.reply("Ha! Gotcha! You just edited this!", {
-      reply_to_message_id: ctx.editedMessage.message_id,
+      reply_to_message_id: ctx.editedMessage?.message_id,
     }),
 );
 
