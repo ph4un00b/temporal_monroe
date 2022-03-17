@@ -27,5 +27,31 @@ serve(async (req) => {
   return new Response();
 });
 
-// https://api.telegram.org/bot<bot_token>/setWebhook?url=<webhook_url>
-// {"ok":true,"result":true,"description":"Webhook was set"}
+// [info code below]. Not used anywhere.
+let URL =
+  `https://api.telegram.org/bot<bot_token>/setWebhook?url=<webhook_url>`;
+// payload {"ok":true,"result":true,"description":"Webhook was set"}
+
+// for updates you should set them by requesting. [use curl or bot.api.setWebhook API]
+// https://core.telegram.org/bots/api#update
+const _URL_WITH_UPDATES =
+  `${URL}&allowed_updates=["callback_query","inline_query", "chat_member"]`;
+// payload {"ok":true,"result":true,"description":"Webhook is already set"}
+
+// if you want to get current info
+URL = `https://api.telegram.org/bot<bot_token>/getWebhookInfo`;
+// payload:
+//
+// {
+//   "ok": true,
+//   "result": {
+//     "url": "https://url.host.com",
+//     "has_custom_certificate": false,
+//     "pending_update_count": 0,
+//     "last_error_date": 987654,
+//     "last_error_message": "Wrong response from the webhook: 502 Bad Gateway",
+//     "max_connections": 40,
+//     "ip_address": "127.0.0.1",
+//     "allowed_updates": ["chat_member"],
+//   },
+// };
