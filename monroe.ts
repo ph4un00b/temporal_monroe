@@ -49,14 +49,14 @@ bot.on("callback_query:data", (ctx) => {
   console.log(ctx);
 });
 
-bot.on("channel_post:text").hears(/switch/, (ctx) => {
+bot.on(["channel_post:text", ":text"]).hears(/switch/, (ctx) => {
   console.log(ctx);
 
   const inlineKeyboard = new InlineKeyboard()
     .text("Get random music", "random").row()
     .switchInline("Send music to friends");
 
-  ctx.reply("Here is your inline keyboard!", {
+  ctx.reply("Here is your switch keyboard!", {
     reply_markup: inlineKeyboard,
   });
 });
