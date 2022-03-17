@@ -36,6 +36,7 @@ monroe: Welcome! Send me a b0tnude!
 I have this options for you:
 you can type:
 
+- /keyboard_resize
 - /keyboard
 - /inline
 - switch
@@ -57,6 +58,12 @@ const global_keyboard = new Keyboard()
   .text("0").text(".").text("=").text("+");
 
 const global_inline = new InlineKeyboard().text("click", "click-payload");
+
+bot.command("keyboard_resize", async (ctx) => {
+  await ctx.reply("calculator resized!", {
+    reply_markup: { resize_keyboard: true, keyboard: global_keyboard.build() },
+  });
+});
 
 bot.command("keyboard", async (ctx) => {
   await ctx.reply("calculator!", { reply_markup: global_keyboard });
