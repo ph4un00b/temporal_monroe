@@ -25,12 +25,14 @@ export const bot = new Bot(token, {
   },
 });
 
-bot.command("start", (ctx) => ctx.reply(`
+bot.command("start", (ctx) =>
+  ctx.reply(`
 monroe: Welcome! Send me a b0tnude!
 
 I have this options for you:
 you can type:
 
+- switch
 - inline
 - html
 - markdown
@@ -41,6 +43,23 @@ bot will react on:
 - upload an image
 - edit a message
 `));
+
+// Any button of any inline keyboard:
+bot.on("callback_query:data", (ctx) => {
+  console.log(ctx);
+});
+
+bot.on("channel_post:text").hears(/switch/, (ctx) => {
+  console.log(ctx);
+
+  const inlineKeyboard = new InlineKeyboard()
+    .text("Get random music", "random").row()
+    .switchInline("Send music to friends");
+
+  ctx.reply("Here is your inline keyboard!", {
+    reply_markup: inlineKeyboard,
+  });
+});
 
 bot.on("channel_post:text").hears(/inline/, (ctx) => {
   console.log(ctx);
