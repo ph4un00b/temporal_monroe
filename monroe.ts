@@ -24,7 +24,8 @@ export const bot = new Bot(token, {
     first_name: name,
     can_join_groups: true,
     supports_inline_queries: false,
-    can_read_all_group_messages: false,
+    // you can toggle privacy_mode talking with @BotFather
+    can_read_all_group_messages: true,
     is_bot: true,
   },
 });
