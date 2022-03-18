@@ -35,10 +35,9 @@ export const bot = new Bot(token, {
 // bot.on("EVENT", middleware as Function | Object)
 // https://grammy.dev/guide/middleware.html#the-middleware-stack
 
-bot.use(responseTime)
+bot.use(responseTime);
 
-
-bot.on("chat_member", (ctx) => {
+bot.on("chat_member", async (ctx) => {
   // ctx.api === bot.api
   console.log(ctx.chatMember);
   const { new_chat_member: { status, user } } = ctx.chatMember;
@@ -46,7 +45,7 @@ bot.on("chat_member", (ctx) => {
   const { username, first_name, last_name } = user;
   const new_member = username ?? `${first_name} ${last_name}`.trim();
 
-  ctx.reply(`
+  await ctx.reply(`
 monroe: Welcome @${new_member}! Send me a b0tnude!
 
 I have this options for you:
@@ -71,8 +70,8 @@ bot will react on:
 `);
 });
 
-bot.command("start", (ctx) =>
-  ctx.reply(`
+bot.command("start", async (ctx) =>
+  await ctx.reply(`
 monroe: Welcome! Send me a b0tnude!
 
 I have this options for you:
@@ -150,14 +149,14 @@ bot.on("callback_query:data", async (ctx) => {
   await ctx.answerCallbackQuery();
 });
 
-bot.on(["channel_post:text", ":text"]).hears(/switch/, (ctx) => {
+bot.on(["channel_post:text", ":text"]).hears(/switch/, async (ctx) => {
   console.log(ctx);
 
   const inlineKeyboard = new InlineKeyboard()
     .text("Get random music", "random").row()
     .switchInline("Send music to friends");
 
-  ctx.reply(
+  await ctx.reply(
     "Here is your switch keyboard! this, only works on direct message with monroe bot!",
     {
       reply_markup: inlineKeyboard,
@@ -165,7 +164,7 @@ bot.on(["channel_post:text", ":text"]).hears(/switch/, (ctx) => {
   );
 });
 
-bot.on("channel_post:text").hears(/inline/, (ctx) => {
+bot.on("channel_post:text").hears(/inline/, async (ctx) => {
   console.log(ctx);
 
   const keyboard = new InlineKeyboard()
@@ -173,13 +172,13 @@ bot.on("channel_post:text").hears(/inline/, (ctx) => {
     .text("C").text("D").row()
     .url("phau page", "https://phau-root.web.app/phau/");
 
-  ctx.reply("Here is your inline keyboard!", {
+  await ctx.reply("Here is your inline keyboard!", {
     reply_markup: keyboard,
   });
 });
 
-bot.on(["channel_post:text", ":text"]).hears(/html/, (ctx) => {
-  ctx.reply(
+bot.on(["channel_post:text", ":text"]).hears(/html/, async (ctx) => {
+  await ctx.reply(
     `<b>bold</b>, <strong>bold</strong>
   <i>italic</i>, <em>italic</em>
   <u>underline</u>, <ins>underline</ins>
@@ -198,8 +197,8 @@ bot.on(["channel_post:text", ":text"]).hears(/html/, (ctx) => {
   );
 });
 
-bot.on(["channel_post:text", ":text"]).hears(/markdown/, (ctx) => {
-  ctx.reply(
+bot.on(["channel_post:text", ":text"]).hears(/markdown/, async (ctx) => {
+  await ctx.reply(
     `*Hi\\!* _Welcome_ to [me](https://phau-root.web.app/phau/)\\.
 *bold text*
 _italic text_
@@ -225,30 +224,30 @@ console.log("jamon!");
 // bot.on("message", (ctx) => console.log(ctx));
 bot.on(["channel_post:text", ":text", "message:group_chat_created"]).hears(
   /jamon/,
-  (ctx) => {
+  async (ctx) => {
     console.log(ctx);
-    ctx.reply("did you say jamon?");
+    await ctx.reply("did you say jamon?");
   },
 );
 
 bot.on(
   // ["channel_post:text", ":text", ":group_chat_created"],
   "message:text",
-  (ctx) => {
+  async (ctx) => {
     console.log(ctx);
-    ctx.reply("monroe: That is text and not a photo!");
+    await ctx.reply("monroe: That is text and not a photo!");
   },
 );
 
 bot.on(
   ["channel_post:photo", ":photo"],
-  (ctx) => ctx.reply("monroe: Nice photo! Is that you?"),
+  async (ctx) => await ctx.reply("monroe: Nice photo! Is that you?"),
 );
 
 bot.on(
   ["edited_channel_post", "edited_message"],
-  (ctx) =>
-    ctx.reply("Ha! Gotcha! You just edited this!", {
+  async (ctx) =>
+    await ctx.reply("Ha! Gotcha! You just edited this!", {
       reply_to_message_id: ctx.editedMessage?.message_id,
     }),
 );
