@@ -3,6 +3,7 @@ import {
   InlineKeyboard,
   Keyboard,
 } from "https://deno.land/x/grammy@v1.7.0/mod.ts";
+import { responseTime } from "./middlewares.ts";
 // import { config } from "https://deno.land/x/dotenv/mod.ts";
 // config({ safe: true, export: true });
 
@@ -30,7 +31,15 @@ export const bot = new Bot(token, {
   // },
 });
 
+// how middleware works?
+// bot.on("EVENT", middleware as Function | Object)
+// https://grammy.dev/guide/middleware.html#the-middleware-stack
+
+bot.use(responseTime)
+
+
 bot.on("chat_member", (ctx) => {
+  // ctx.api === bot.api
   console.log(ctx.chatMember);
   const { new_chat_member: { status, user } } = ctx.chatMember;
   if (status !== "member") return;
@@ -43,10 +52,10 @@ monroe: Welcome @${new_member}! Send me a b0tnude!
 I have this options for you:
 you can type:
 
-- selective (DM)
-- /keyboard_one_button (DM)
-- /keyboard_resize (DM)
-- /keyboard (DM)
+- selective
+- /key_one_button
+- /key_resize
+- /key (keyboard)
 - /inline
 - switch
 - inline
