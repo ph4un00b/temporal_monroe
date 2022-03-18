@@ -1,5 +1,6 @@
 import { webhookCallback } from "https://deno.land/x/grammy/mod.ts";
 import bot from "./monroe.ts";
+// import bot from "./monroe_groups.ts";
 import { serve } from "https://deno.land/std/http/server.ts";
 const handleUpdate = webhookCallback(bot, "std/http");
 
@@ -35,7 +36,7 @@ let URL =
 // for updates you should set them by requesting. [use curl or bot.api.setWebhook API]
 // https://core.telegram.org/bots/api#update
 const _URL_WITH_UPDATES =
-  `${URL}&allowed_updates=["callback_query","inline_query", "chat_member"]`;
+  `${URL}&allowed_updates=["chat_member", "message", "edited_message"]`;
 // payload {"ok":true,"result":true,"description":"Webhook is already set"}
 
 // if you want to get current info

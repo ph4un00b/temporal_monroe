@@ -18,16 +18,16 @@ if (typeof username !== "string") throw new Error("no bot username!");
 
 export const bot = new Bot(token, {
   // https://api.telegram.org/bot<bot_token>/getMe
-  botInfo: {
-    id,
-    username,
-    first_name: name,
-    can_join_groups: true,
-    supports_inline_queries: false,
-    // you can toggle privacy_mode talking with @BotFather
-    can_read_all_group_messages: true,
-    is_bot: true,
-  },
+  // botInfo: {
+  //   id,
+  //   username,
+  //   first_name: name,
+  //   can_join_groups: true,
+  //   supports_inline_queries: false,
+  //   // you can toggle privacy_mode talking with @BotFather
+  //   can_read_all_group_messages: true,
+  //   is_bot: true,
+  // },
 });
 
 bot.on("chat_member", (ctx) => {
@@ -38,9 +38,27 @@ bot.on("chat_member", (ctx) => {
   const new_member = username ?? `${first_name} ${last_name}`.trim();
 
   ctx.reply(`
-monroe: Welcome ${new_member}! Send me a b0tnude!
+monroe: Welcome @${new_member}! Send me a b0tnude!
 
-try some options, type /start:
+I have this options for you:
+you can type:
+
+- selective (DM)
+- /keyboard_one_button (DM)
+- /keyboard_resize (DM)
+- /keyboard (DM)
+- /inline
+- switch
+- inline
+- html
+- markdown
+- jamon
+
+bot will react on:
+- members statuses (join / left)
+- any text
+- upload an image
+- edit a message
 `);
 });
 
@@ -196,13 +214,17 @@ console.log("jamon!");
 });
 
 // bot.on("message", (ctx) => console.log(ctx));
-bot.on(["channel_post:text", ":text"]).hears(/jamon/, (ctx) => {
-  console.log(ctx);
-  ctx.reply("did you say jamon?");
-});
+bot.on(["channel_post:text", ":text", "message:group_chat_created"]).hears(
+  /jamon/,
+  (ctx) => {
+    console.log(ctx);
+    ctx.reply("did you say jamon?");
+  },
+);
 
 bot.on(
-  ["channel_post:text", ":text"],
+  // ["channel_post:text", ":text", ":group_chat_created"],
+  "message:text",
   (ctx) => {
     console.log(ctx);
     ctx.reply("monroe: That is text and not a photo!");
