@@ -1,0 +1,4 @@
+{
+  // this works since deno v1.20
+  "importMap": "import_map.json"
+}
