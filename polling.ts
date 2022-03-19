@@ -6,8 +6,8 @@ import {
 import { config } from "https://deno.land/x/dotenv@v3.2.0/mod.ts";
 config({ safe: true, export: true });
 
-// const token = Deno.env.get("POLLING_TOKEN");
-const token = Deno.env.get("TOKEN");
+const token = Deno.env.get("POLLING_TOKEN");
+// const token = Deno.env.get("TOKEN");
 if (typeof token !== "string") throw new Error("no token!");
 // Create an instance of the `Bot` class and pass your authentication token to it.
 const bot = new Bot(token); // <-- put your authentication token between the ""
