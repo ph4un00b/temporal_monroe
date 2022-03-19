@@ -46,7 +46,9 @@ bot.on("chat_member", async (ctx) => {
   const { username, first_name, last_name } = user;
   const new_member = username ?? `${first_name} ${last_name}`.trim();
 
-  await ctx.api.sendMessage(ctx.from.id, `Welcome to the jungle group!
+  await ctx.api.sendMessage(
+    ctx.from.id,
+    `Welcome to the jungle group!
 
 I have this options for you:
 you can type:
@@ -66,7 +68,8 @@ bot will react on:
 - members statuses (join / left)
 - any text
 - upload an image
-- edit a message`)
+- edit a message`,
+  );
 
   await ctx.reply(`
 monroe: Welcome @${new_member}! Send me a b0tnude!
@@ -100,6 +103,7 @@ monroe: Welcome! Send me a b0tnude!
 I have this options for you:
 you can type:
 
+- @CURRENT_BOT phau
 - selective (DM)
 - /keyboard_one_button (DM)
 - /keyboard_resize (DM)
@@ -125,6 +129,32 @@ const global_keyboard = new Keyboard()
   .text("0").text(".").text("=").text("+");
 
 const global_inline = new InlineKeyboard().text("click", "click-payload");
+
+bot.inlineQuery(/phau/, async (ctx) => {
+  await ctx.answerInlineQuery(
+    [
+      {
+        type: "article",
+        id: "phau-website",
+        title: "phau",
+        input_message_content: {
+          message_text: "<b>phau</b> pretty website! 👇",
+          parse_mode: "HTML",
+        },
+        reply_markup: new InlineKeyboard().url(
+          "phau website",
+          "https://phau-root.web.app/phau",
+        ),
+        url: "https://phau-root.web.app/phau",
+        description: "The phau page.",
+      },
+    ],
+    { cache_time: 30 * 24 * 3600 }, // one month in seconds
+  );
+});
+
+// Return empty result list for other queries.
+bot.on("inline_query", (ctx) => ctx.answerInlineQuery([]));
 
 bot.on(["channel_post:text", ":text"]).hears(/selective/, async (ctx) => {
   await ctx.reply("selective!", {

@@ -2,17 +2,44 @@ import {
   Bot,
   GrammyError,
   HttpError,
+  InlineKeyboard,
 } from "https://deno.land/x/grammy@v1.7.0/mod.ts";
 import { config } from "https://deno.land/x/dotenv@v3.2.0/mod.ts";
 config({ safe: true, export: true });
 
 const token = Deno.env.get("POLLING_TOKEN");
-// const token = Deno.env.get("TOKEN");
 if (typeof token !== "string") throw new Error("no token!");
 // Create an instance of the `Bot` class and pass your authentication token to it.
-const bot = new Bot(token); // <-- put your authentication token between the ""
-// You can now register listeners on your bot object `bot`.
-// grammY will call the listeners when users send messages to your bot.
+const bot = new Bot(token);
+// Shameless self-advertising in one project's documentation
+// is the best kind of advertising.
+bot.inlineQuery(/best/, async (ctx) => {
+  await ctx.answerInlineQuery(
+    [
+      {
+        type: "article",
+        id: "grammy-website",
+        title: "grammY",
+        input_message_content: {
+          message_text:
+"<b>grammY</b> is the best way to create your own Telegram bots. \
+They even have a pretty website! 👇",
+          parse_mode: "HTML",
+        },
+        reply_markup: new InlineKeyboard().url(
+          "grammY website",
+          "https://grammy.dev/",
+        ),
+        url: "https://grammy.dev/",
+        description: "The Telegram Bot Framework.",
+      },
+    ],
+    { cache_time: 30 * 24 * 3600 }, // one month in seconds
+  );
+});
+
+// Return empty result list for other queries.
+bot.on("inline_query", (ctx) => ctx.answerInlineQuery([]));
 
 bot.on("chat_member", async (ctx) => {
   console.log(ctx.chatMember);
@@ -38,7 +65,7 @@ bot.command("start", async (ctx) => {
 
 // Handle other messages.
 bot.on(":text", async (ctx) => {
-  console.log(ctx);
+  console.log(JSON.stringify(ctx, undefined, 2));
   await ctx.reply("Got another message!");
 });
 
@@ -48,7 +75,13 @@ bot.on(":text", async (ctx) => {
 // Start the bot.
 bot.start({
   // https://core.telegram.org/bots/api#update
-  allowed_updates: ["chat_member", "message", "edited_message"],
+  allowed_updates: [
+    "chat_member",
+    "message",
+    "edited_message",
+    "inline_query",
+    "chosen_inline_result",
+  ],
 });
 
 bot.catch((err) => {
