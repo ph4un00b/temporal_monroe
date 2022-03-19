@@ -36,7 +36,7 @@ let URL =
 // for updates you should set them by requesting. [use curl or bot.api.setWebhook API]
 // https://core.telegram.org/bots/api#update
 const _URL_WITH_UPDATES =
-  `${URL}&allowed_updates=["chat_member", "message", "edited_message", "inline_query", "chosen_inline_result"]`;
+  `${URL}&allowed_updates=["chat_member", "message", "edited_message", "inline_query", "chosen_inline_result", "callback_query"]`;
 // payload {"ok":true,"result":true,"description":"Webhook is already set"}
 
 // if you want to get current info

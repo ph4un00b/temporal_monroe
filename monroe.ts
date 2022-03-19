@@ -38,6 +38,30 @@ export const bot = new Bot(token, {
 
 bot.use(responseTime);
 
+const welcome_message = `Welcome to the jungle group!
+
+I have this options for you:
+you can type:
+
+- send voice message
+- @CURRENT_BOT phau
+- selective
+- /key_one_button
+- /key_resize
+- /key (keyboard)
+- /inline
+- switch
+- inline
+- html
+- markdown
+- jamon
+
+bot will react on:
+- members statuses (join / left)
+- any text
+- upload an image
+- edit a message`;
+
 bot.on("chat_member", async (ctx) => {
   // ctx.api === bot.api
   console.log(ctx.chatMember);
@@ -46,81 +70,28 @@ bot.on("chat_member", async (ctx) => {
   const { username, first_name, last_name } = user;
   const new_member = username ?? `${first_name} ${last_name}`.trim();
 
-  await ctx.api.sendMessage(
-    ctx.from.id,
-    `Welcome to the jungle group!
-
-I have this options for you:
-you can type:
-
-- selective
-- /key_one_button
-- /key_resize
-- /key (keyboard)
-- /inline
-- switch
-- inline
-- html
-- markdown
-- jamon
-
-bot will react on:
-- members statuses (join / left)
-- any text
-- upload an image
-- edit a message`,
-  );
-
-  await ctx.reply(`
-monroe: Welcome @${new_member}! Send me a b0tnude!
-
-I have this options for you:
-you can type:
-
-- selective
-- /key_one_button
-- /key_resize
-- /key (keyboard)
-- /inline
-- switch
-- inline
-- html
-- markdown
-- jamon
-
-bot will react on:
-- members statuses (join / left)
-- any text
-- upload an image
-- edit a message
-`);
+  await ctx.api.sendMessage(ctx.from.id, welcome_message);
+  await ctx.reply(`monroe: Welcome @${new_member}! Send me a b0tnude!`);
+  await ctx.reply(welcome_message);
 });
 
-bot.command("start", async (ctx) =>
-  await ctx.reply(`
-monroe: Welcome! Send me a b0tnude!
+bot.command("start", async (ctx) => await ctx.reply(welcome_message));
 
-I have this options for you:
-you can type:
+// https://grammy.dev/guide/filter-queries.html#shortcuts
+bot.on("message:voice", async (ctx) => {
+  const voice = ctx.msg.voice;
 
-- @CURRENT_BOT phau
-- selective (DM)
-- /keyboard_one_button (DM)
-- /keyboard_resize (DM)
-- /keyboard (DM)
-- /inline
-- switch
-- inline
-- html
-- markdown
-- jamon
+  const duration = voice.duration; // in seconds
+  await ctx.reply(`Your voice message is ${duration} seconds long.`);
 
-bot will react on:
-- members statuses (join / left)
-- any text
-- upload an image
-- edit a message
-`));
+  const fileId = voice.file_id;
+  await ctx.reply("The file identifier of your voice message is: " + fileId);
+
+  const file = await ctx.getFile(); // valid for at least 1 hour
+  const path = file.file_path; // file path on Bot API server
+  // download! https://api.telegram.org/file/bot<token>/<file_path>
+  await ctx.reply("Download your own file again: " + path);
+});
 
 const global_keyboard = new Keyboard()
   .text("7").text("8").text("9").text("*").row()
