@@ -19,16 +19,17 @@ if (typeof username !== "string") throw new Error("no bot username!");
 
 export const bot = new Bot(token, {
   // https://api.telegram.org/bot<bot_token>/getMe
-  // botInfo: {
-  //   id,
-  //   username,
-  //   first_name: name,
-  //   can_join_groups: true,
-  //   supports_inline_queries: false,
-  //   // you can toggle privacy_mode talking with @BotFather
-  //   can_read_all_group_messages: true,
-  //   is_bot: true,
-  // },
+  botInfo: {
+    id,
+    username,
+    first_name: name,
+    can_join_groups: true,
+    // you can toggle inline_mode talking with @BotFather
+    supports_inline_queries: true,
+    // you can toggle privacy_mode talking with @BotFather
+    can_read_all_group_messages: true,
+    is_bot: true,
+  },
 });
 
 // how middleware works?
@@ -44,6 +45,28 @@ bot.on("chat_member", async (ctx) => {
   if (status !== "member") return;
   const { username, first_name, last_name } = user;
   const new_member = username ?? `${first_name} ${last_name}`.trim();
+
+  await ctx.api.sendMessage(ctx.from.id, `Welcome to the jungle group!
+
+I have this options for you:
+you can type:
+
+- selective
+- /key_one_button
+- /key_resize
+- /key (keyboard)
+- /inline
+- switch
+- inline
+- html
+- markdown
+- jamon
+
+bot will react on:
+- members statuses (join / left)
+- any text
+- upload an image
+- edit a message`)
 
   await ctx.reply(`
 monroe: Welcome @${new_member}! Send me a b0tnude!
