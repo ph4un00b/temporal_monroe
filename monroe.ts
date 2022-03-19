@@ -1,11 +1,5 @@
-import {
-  Bot,
-  InlineKeyboard,
-  Keyboard,
-} from "https://deno.land/x/grammy@v1.7.0/mod.ts";
+import { Bot, InlineKeyboard, Keyboard } from "./deps.ts";
 import { responseTime } from "./middlewares.ts";
-// import { config } from "https://deno.land/x/dotenv/mod.ts";
-// config({ safe: true, export: true });
 
 const token = Deno.env.get("TOKEN");
 const id = Number(Deno.env.get("BOT_ID"));

@@ -1,10 +1,5 @@
-import {
-  Bot,
-  GrammyError,
-  HttpError,
-  InlineKeyboard,
-} from "https://deno.land/x/grammy@v1.7.0/mod.ts";
-import { config } from "https://deno.land/x/dotenv@v3.2.0/mod.ts";
+import { Bot, GrammyError, HttpError, InlineKeyboard } from "./deps.ts";
+import { config } from "./dev_deps.ts";
 config({ safe: true, export: true });
 
 const token = Deno.env.get("POLLING_TOKEN");

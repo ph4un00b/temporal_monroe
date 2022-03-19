@@ -1,7 +1,6 @@
-import { webhookCallback } from "https://deno.land/x/grammy/mod.ts";
+import { serve, webhookCallback } from "./deps.ts";
 import bot from "./monroe.ts";
 // import bot from "./monroe_groups.ts";
-import { serve } from "https://deno.land/std/http/server.ts";
 const handleUpdate = webhookCallback(bot, "std/http");
 
 /*

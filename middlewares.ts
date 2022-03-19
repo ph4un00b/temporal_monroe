@@ -1,11 +1,8 @@
-import {
-  Context,
-  NextFunction,
-} from "https://deno.land/x/grammy@v1.7.0/mod.ts";
+import { Context, NextFunction } from "./deps.ts";
 
 /** Measures the response time of the bot, and logs it to `console` */
 export async function responseTime(
-  ctx: Context,
+  _ctx: Context,
   next: NextFunction, // is an alias for: () => Promise<void>
 ): Promise<void> {
   // TODO: implement
