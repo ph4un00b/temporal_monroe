@@ -1,3 +1,6 @@
-# monroe bot
+# proof of concept
 
-[X] basic bot [] temporal use case
+## monroe bot
+
+- [x] basic bot
+- [ ] temporal use case
